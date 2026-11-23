@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CoSMo: A Compact Spectral Space of Body Motion in Video</title>
+<meta name="description" content="CoSMo represents video motion by its spectral signature: one compact, frequency-ordered code per motion that can be transferred, blended, refined from coarse to fine, and sampled.">
+<script>try { const t = localStorage.getItem('timbre-theme'); if (t) document.documentElement.dataset.theme = t; } catch (e) {}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css?v=20261122a">
+</head>
+<body>
+
+<nav class="top"><div class="wrap">
+  <a class="brand" href="#top">CoSMo</a>
+  <div class="links">
+    <a href="#highlights">Results</a>
+  </div>
+  <div class="ctl"><button id="speed" title="Play every video at half speed">speed 1×</button><button id="theme" title="Switch light / dark">theme</button></div>
+</div></nav>
+
+<header class="hero" id="top"><div class="wrap">
+  <h1>CoSMo</h1>
+  <div class="sub">A <span class="hl">Co</span>mpact <span class="hl">S</span>pectral Space of Body <span class="hl">Mo</span>tion in Video</div>
+  <div class="teaser" style="text-align:left">
+    <div id="teaser-tabs"></div>
+    <div id="teaser-stage"></div>
+    <p class="tcap" id="teaser-cap"></p>
+  </div>
+</div></header>
+
+<!-- ================================================================ ABSTRACT -->
+<!-- ================================================================ HIGHLIGHTS (user 2026-11-17: new section above the results, subsections still empty; one shown at a time) -->
+<div id="highlights" class="tab-anchor"></div>
+<nav class="tabbar" data-anchor="highlights" aria-label="Highlight sections"><div class="wrap rtabs" role="tablist">
+  <button class="rtab" role="tab" data-panel="hl-transfer">Motion Transfer</button>
+  <button class="rtab" role="tab" data-panel="hl-interp">Interpolation</button>
+  <button class="rtab" role="tab" data-panel="hl-compose">Composition</button>
+  <button class="rtab" role="tab" data-panel="hl-bands">Frequency Bands</button>
+  <button class="rtab" role="tab" data-panel="hl-knobs">Intensity</button>
+  <button class="rtab" role="tab" data-panel="hl-length">Multi-Length Generation</button>
+  <button class="rtab" role="tab" data-panel="hl-novel">Novel Motions</button>
+  <button class="rtab" role="tab" data-panel="hl-baselines">Baseline Comparisons</button>
+</div></nav>
+
+<section id="hl-transfer" class="tab-panel"><div class="wrap">
+  <h2>Motion Transfer</h2>
+  <p>The motion of a source video, encoded as one code, animates a new target image. Left: the source video. Right: ours on Wan2.2, starting from the target image.</p>
+  <div id="hl-gal"></div>
+</div></section>
+
+<section id="hl-interp" class="tab-panel"><div class="wrap">
+  <h2>Interpolation</h2>
+  <p>Blending the codes of two motions, (1 &minus; w)&middot;A + w&middot;B, moves gradually from motion A (w = 0) to motion B (w = 1). Both ends are plain transfers of A and B.</p>
+  <div id="hl-int"></div>
+</div></section>
+
+<section id="hl-compose" class="tab-panel"><div class="wrap">
+  <h2>Composition</h2>
+  <p>Adding the codes of two motions, A + B, gives one motion that does both. Each example shows A alone, B alone and A + B on the same target.</p>
+  <div id="hl-comp"></div>
+</div></section>
+
+<section id="hl-bands" class="tab-panel"><div class="wrap">
+  <h2>Frequency Bands</h2>
+  <p>Each code is a stack of 16 temporal frequency bands. Keeping only the lowest bands (k &lt; 2, 4, 8) gives a coarser version of the motion, its slow course without the fast detail; adding bands brings the detail back.</p>
+  <div id="hl-band"></div>
+</div></section>
+
+<section id="hl-knobs" class="tab-panel"><div class="wrap">
+  <h2>Intensity</h2>
+  <p>Moving a code along one direction, from the stillest training motions toward the most moving ones, turns the motion down (&alpha; &lt; 0) or up (&alpha; &gt; 0). &alpha; = 0 is the plain transfer.</p>
+  <div id="hl-knob"></div>
+</div></section>
+
+<section id="hl-length" class="tab-panel"><div class="wrap">
+  <h2>Multi-Length Generation</h2>
+  <p>The same code rendered at 17 to 129 frames, though the model was trained only at 61. The whole motion fits each length, so the output length sets how fast it plays.</p>
+  <div id="hl-len"></div>
+</div></section>
+
+<section id="hl-novel" class="tab-panel"><div class="wrap">
+  <h2>Novel Motions</h2>
+  <p>Each code here is a new motion, made in the code space rather than taken from a video.</p>
+  <div id="hl-nov"></div>
+</div></section>
+
+<!-- user 2026-11-20: one section 'Baseline Comparisons' with two subsections, each keeping its own name:
+     Same Backbone (ours on CogVideoX-5B, the backbone of DisMo and FlexiAct) and As Released (ours on Wan2.2 vs DisMo as released) -->
+<section id="hl-baselines" class="tab-panel"><div class="wrap">
+  <h2>Baseline Comparisons</h2>
+  <div class="rtabs subtabs" role="tablist" aria-label="Baseline comparisons" style="grid-template-columns:repeat(2,minmax(0,1fr));margin:6px 0 26px">
+    <button class="rtab" role="tab" data-sub="hlb-rel">Comparison with DisMo</button>
+    <button class="rtab" role="tab" data-sub="hlb-same">Same Backbone: Baseline Comparisons</button>
+  </div>
+
+  <div id="hlb-rel" role="tabpanel">
+  <h3 style="margin-top:6px">Comparison with DisMo</h3>
+  <p>DisMo against our main model. Both get the same source video and target image.</p>
+  <div id="hl-rel"></div>
+  </div>
+
+  <div id="hlb-same" role="tabpanel" hidden>
+  <h3 style="margin-top:6px">Same Backbone: Baseline Comparisons</h3>
+  <!-- user 2026-11-19: subsections selectable like the main sections (one shown at a time); 2026-11-20: DisMo / Text: Transfer removed (index_before_rm_dt.html) -->
+  <div class="rtabs subtabs" role="tablist" aria-label="Same-backbone subsections" style="grid-template-columns:repeat(2,minmax(0,1fr));margin:6px 0 22px">
+    <button class="rtab" role="tab" data-sub="hlb-all">All Baselines: Transfer</button>
+    <button class="rtab" role="tab" data-sub="hlb-int">DisMo: Interpolation</button>
+  </div>
+  <div id="hlb-all" role="tabpanel">
+    <p style="text-wrap:pretty">Text prompt, FlexiAct and DisMo run with their official code and protocol on the same inputs. Ours here runs on CogVideoX-5B, the backbone DisMo/FlexiAct uses.<br>
+    <b>Text prompt</b> gets a written description of the motion. <b>FlexiAct</b> is trained on each motion source video and also gets a motion description. <b>DisMo</b> and <b>CoSMo</b> get only an appearance prompt for the target. CoSMo's prompt ends with &ldquo;an articulated motion, high quality&rdquo;, the fixed caption every training clip had; it is the same for every video and names no motion.</p>
+    <div id="hl-bt-all"></div>
+  </div>
+  <div id="hlb-int" role="tabpanel" hidden>
+    <p>Only DisMo can interpolate; we apply the same weights to its per-frame embeddings, frame by frame. Ours runs on CogVideoX-5B.</p>
+    <div id="hl-bi"></div>
+  </div>
+  </div>
+</div></section>
+
+<footer><div class="wrap">CoSMo · anonymous project page</div></footer>
+
+<script src="assets/data.js?v=20261122a"></script>
+<script src="assets/app.js?v=20261122a"></script>
+</body>
+</html>
