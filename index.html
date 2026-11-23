@@ -27,12 +27,16 @@
   <h1>CoSMo</h1>
   <div class="sub">A <span class="hl">Co</span>mpact <span class="hl">S</span>pectral Space of Body <span class="hl">Mo</span>tion in Video</div>
   <!-- user 2026-11-23: the full CoSMo teaser video above the teaser tabs (diffusion-pipe 0_html/cosmo_video/cosmo_teaser_LOCKED_65s.mp4,
-       65 s, silent). Unlike every other video on the page it is a normal player: controls (play / pause / seek / fullscreen), no autoplay,
-       no loop, and the page's speed toggle leaves it alone (app.js) -->
+       65 s, silent). Unlike every other video on the page it is a normal player: controls (play / pause / seek / fullscreen), no loop, and
+       the page's speed toggle leaves it alone (app.js). User 2026-11-23: plays automatically (muted, which browsers require for autoplay;
+       the video has no sound); visitors who prefer reduced motion get it paused instead -->
   <figure class="hero-video">
-    <video id="hero-video" src="v/hero/cosmo_teaser.mp4" poster="img/hero_poster.jpg" controls playsinline preload="metadata"
+    <video id="hero-video" src="v/hero/cosmo_teaser.mp4" poster="img/hero_poster.jpg" controls autoplay muted playsinline preload="auto"
            aria-label="CoSMo teaser: one body motion on many subjects, a motion compressed into 384 numbers, interpolation, intensity, the space of motions, and transfers"></video>
   </figure>
+  <script>
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) { const v = document.getElementById('hero-video'); v.removeAttribute('autoplay'); v.pause(); }
+  </script>
   <div class="teaser" style="text-align:left">
     <div id="teaser-tabs"></div>
     <div id="teaser-stage"></div>
