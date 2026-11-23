@@ -57,6 +57,13 @@ header.hero h1 { font: 500 clamp(44px, 7vw, 76px)/1 var(--serif); margin: 0; let
 header.hero .sub { font: 400 clamp(20px, 3vw, 28px)/1.25 var(--serif); color: var(--ink-2); margin: 12px 0 18px; letter-spacing: .04em; }
 header.hero .sub .hl { color: var(--ink); font-weight: 600; }   /* user 2026-11-17: upright subtitle, Co / S / Mo bold, no colour */
 header.hero .authors { color: var(--ink-3); font-size: 15px; }
+/* user 2026-11-23: 'Further Results' heading between the abstract / pipeline row and the results tabs (same face as the section titles) */
+.results-head { padding: 56px 0 18px; }
+.results-head h2 { font: 500 34px/1.15 var(--serif); margin: 0; letter-spacing: -.005em; text-wrap: balance; }
+/* user 2026-11-23: the website video (hook + motion compression) under the subtitle, full content width, above the teaser */
+header.hero .hero-video { margin: 10px 0 38px; }
+header.hero .hero-video video { display: block; width: 100%; max-width: 100%; aspect-ratio: 16 / 9; border-radius: var(--radius);
+  background: #070a16; box-shadow: var(--shadow); }
 .pills { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin: 22px 0 8px; }
 .pill { display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; border-radius: 999px; background: var(--ink); color: var(--bg);
   font-size: 14px; font-weight: 500; }

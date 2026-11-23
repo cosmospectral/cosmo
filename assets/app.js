@@ -682,7 +682,7 @@
   document.addEventListener('scroll', onScroll, { passive: true }); onScroll();
   const sp = $('#speed'); if (sp) sp.addEventListener('click', () => {
     RATE = RATE === 1 ? 0.5 : 1; sp.textContent = RATE === 1 ? 'speed 1×' : 'speed ½×'; sp.classList.toggle('on', RATE !== 1);
-    document.querySelectorAll('video').forEach((v) => (v.playbackRate = RATE));
+    document.querySelectorAll('video:not(#hero-video)').forEach((v) => (v.playbackRate = RATE));   // the hero teaser is a normal player
   });
   const th = $('#theme'); if (th) th.addEventListener('click', () => {
     const r = document.documentElement; const dark = r.dataset.theme ? r.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
