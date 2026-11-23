@@ -33,23 +33,31 @@
   </div>
 </div></header>
 
-<!-- ================================================================ ABSTRACT (user 2026-11-23: added back; text = the paper's abstract, secs/abstract.tex) -->
-<section class="abstract" id="abstract"><div class="wrap">
-  <div class="kicker">Abstract</div>
-  <p>We introduce <b>CoSMo</b>, a <em>compact spectral space</em> of body motion in video, in which each motion is a single code that can be compared and edited without training, transferred to a new subject, interpolated, composed, scaled in intensity and detail, or sampled anew. Our encoder expresses how a clip's DINOv2 features change over time in a fixed temporal basis, the discrete cosine transform (DCT), and compresses this change into 384 numbers. Because each frequency band is the same cosine pattern in every code, codes are aligned in time, ordered from coarse to fine, and can be blended or added without matching frames. What stays constant over a clip cancels, and keeping fewer frequencies leaves less of the performer and scene. The encoder is trained on real videos and on synthetic motions of several characters, and lightweight adapters let a frozen image-to-video model render any code with any subject. On unseen videos, our code ranks the same motion on other bodies higher than DisMo, a per-frame representation, while its nearest neighbors show the same performer about 40% less often with a seven times more compact code. In generation, without per-motion training, CoSMo transfers motion more faithfully than FlexiAct and a text-prompt baseline, at least as faithfully as DisMo on automatic metrics and clearly better between humanoid bodies, and its blends keep much more of both source motions than DisMo's. Users rank CoSMo first nearly twice as often as DisMo for motion transfer (59% vs. 30%), place it top-two 94% of the time, and prefer it in 76% of the interpolation comparisons.</p>
-</div></section>
-
-<!-- ================================================================ METHOD (user 2026-11-23: added back; caption = the paper's Fig. 3, figures/pipeline.tex) -->
-<section id="method"><div class="wrap">
-  <div class="kicker">Method</div>
-  <h2>Pipeline</h2>
-  <figure class="fig">
+<!-- ================================================================ ABSTRACT + PIPELINE (user 2026-11-23: added back, then "put abstract and pipeline in same row";
+     abstract = the paper's abstract, secs/abstract.tex; figure + caption = the paper's Fig. 3, figures/pipeline.tex; stacked below 960px) -->
+<style>
+  .ovrow .wrap { max-width: 1320px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); gap: 44px; align-items: start; }
+  .ovrow .ov-col { scroll-margin-top: 70px; }
+  .ovrow .ov-abs p { font: 400 16.5px/1.62 var(--serif); max-width: none; margin: 0; color: var(--ink); text-align: justify; hyphens: auto; }
+  .ovrow figure.fig { margin: 0; }
+  .ovrow figure.fig figcaption { font-size: 13.5px; max-width: none; }
+  @media (max-width: 960px) { .ovrow .wrap { grid-template-columns: 1fr; gap: 36px; } .ovrow .ov-abs p { font-size: 17px; } }
+</style>
+<section class="ovrow"><div class="wrap">
+  <div class="ov-col ov-abs" id="abstract">
+    <div class="kicker">Abstract</div>
+    <p>We introduce <b>CoSMo</b>, a <em>compact spectral space</em> of body motion in video, in which each motion is a single code that can be compared and edited without training, transferred to a new subject, interpolated, composed, scaled in intensity and detail, or sampled anew. Our encoder expresses how a clip's DINOv2 features change over time in a fixed temporal basis, the discrete cosine transform (DCT), and compresses this change into 384 numbers. Because each frequency band is the same cosine pattern in every code, codes are aligned in time, ordered from coarse to fine, and can be blended or added without matching frames. What stays constant over a clip cancels, and keeping fewer frequencies leaves less of the performer and scene. The encoder is trained on real videos and on synthetic motions of several characters, and lightweight adapters let a frozen image-to-video model render any code with any subject. On unseen videos, our code ranks the same motion on other bodies higher than DisMo, a per-frame representation, while its nearest neighbors show the same performer about 40% less often with a seven times more compact code. In generation, without per-motion training, CoSMo transfers motion more faithfully than FlexiAct and a text-prompt baseline, at least as faithfully as DisMo on automatic metrics and clearly better between humanoid bodies, and its blends keep much more of both source motions than DisMo's. Users rank CoSMo first nearly twice as often as DisMo for motion transfer (59% vs. 30%), place it top-two 94% of the time, and prefer it in 76% of the interpolation comparisons.</p>
+  </div>
+  <div class="ov-col" id="method">
+    <div class="kicker">Pipeline</div>
+    <figure class="fig">
     <img src="img/pipeline.png" alt="Pipeline: spectral encoder trained with a decoder, and the code driving conditional LoRA in a frozen Wan2.2 transformer">
     <figcaption><b>CoSMo Pipeline.</b> (a) The encoder turns the DINOv2 features of clip <i>A</i> into one code <i>c<sub>A</sub></i> through a temporal DCT,
       trained with a decoder that rebuilds the motion (<i>&#x2112;</i><sub>rec</sub>), a contrastive loss (<i>&#x2112;</i><sub>nce</sub>), and a regularizer that keeps
       the code's dimensions varied and decorrelated (<i>&#x2112;</i><sub>reg</sub>). (b) The inverse DCT and a mapping network expand the code into per-frame
       embeddings <i>m</i><sub>0</sub> &hellip; <i>m</i><sub><i>F</i>&minus;1</sub> that drive conditional LoRA layers in all 30 blocks of the frozen Wan2.2 transformer.</figcaption>
   </figure>
+  </div>
 </div></section>
 
 <!-- ================================================================ HIGHLIGHTS (user 2026-11-17: new section above the results, subsections still empty; one shown at a time) -->
